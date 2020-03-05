@@ -20,3 +20,8 @@ class Logs():
 
     def find_debug(self):
         return self._lines_that_contain('Debug')
+
+    def count_logs(self):
+        return { 'Errors': len(self.find_errors()),
+                 'Info': len(self.find_info()),
+                 'Debug': len(self.find_debug())}
