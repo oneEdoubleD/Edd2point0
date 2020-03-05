@@ -27,6 +27,18 @@ class Comparer():
         for i in range(len(new_logs)):
             if new_logs[i] not in old_logs_hash_table.keys():
                 print(new_logs[i], end=" ")
+    
+    def find_all_old_logs(self):
+        old_logs = self._old_logfile.get_logs()
+        new_logs = self._new_logfile.get_logs()
+
+        new_logs_hash_table = dict()
+        for i in range(len(new_logs)):
+            new_logs_hash_table[new_logs[i]] = 1
+
+        for i in range(len(old_logs)):
+            if old_logs[i] not in new_logs_hash_table.keys():
+                print(old_logs[i], end=" ")
 
     def find_new_errors(self):
         old_errors = self._old_logfile.find_errors()

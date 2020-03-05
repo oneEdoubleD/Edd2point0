@@ -25,7 +25,7 @@ def compare_two_logs():
 
     c = Comparer(l1, l2)
     print(c.compare())
-    print(c.find_all_new_logs())
+    print(c.find_all_old_logs())
 
 if __name__ == '__main__':
     main()
