@@ -6,7 +6,6 @@ import time
 
 class Node():
 
-    _attach_explorer = None
     _logfile = None
     _network = None
     _node_path = None
