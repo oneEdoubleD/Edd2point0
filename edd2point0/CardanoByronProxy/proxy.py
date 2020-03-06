@@ -4,9 +4,8 @@ import shutil
 import subprocess
 import time
 
-
-class Node():
-
+class Proxy():
+    
     _logfile = None
     _network = None
     _node_path = None
@@ -14,16 +13,14 @@ class Node():
     _working_dir = None
 
     def __init__(self, path: str, network: str, logfile: str):
-        """Initialize a new cardano-node
+        """Initialize a new cardano-byron-proxy
 
         Args:
-            path: a full path to the node executable
-            network: staging|testnet|mainnet
+            path: a full path to the proxy executable
             logfile: the name of the logfile (remember to add .txt)
         """
         self._logfile = logfile
-        self._network = network
-        self._node_path = path
+        self._proxy_path = path
         self._working_dir = os.getcwd()
 
         try:
@@ -32,27 +29,27 @@ class Node():
         except:
             print('state-node-' + network + ' not detected.')
 
-    def _run_node(self, logfile: str):
-        """Run the node
+    def _run_proxy(self, logfile: str):
+        """Run the proxy
 
         Args:
             logfile: redirects stdout to the logfile specified during initalization
         """
-        self._process = subprocess.Popen([self._node_path], shell=True, stdout=logfile)
+        self._process = subprocess.Popen([self._proxy_path], shell=True, stdout=logfile)
 
-    def _stop_node(self):
-        """Kill the node
+    def _stop_proxy(self):
+        """Kill the proxy
 
         """
         self._process.kill()
 
-    def run_node(self, run_time: int = 3600):
-        """Run the node for a specified duration
+    def run_proxy(self, run_time: int = 3600):
+        """Run the proxy for a specified duration
 
         Args:
             run_time: the number of seconds that the node should run - default is 1 hour
         """
-        with open((self._working_dir + '/logs/node/' + self._logfile), "w+") as node_logfile:
-            self._run_node(node_logfile)
+        with open((self._working_dir + '/logs/proxy/' + self._logfile), "w+") as proxy_logfile:
+            self._run_proxy(proxy_logfile)
             time.sleep(run_time)
-            self._stop_node()
+            self._stop_proxy()
