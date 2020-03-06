@@ -5,29 +5,29 @@ from CardanoNode.node import Node
 from Analyser.analyse_logs import Logs
 from Analyser.comparer import Comparer
 
-def main():
+logdir = os.getcwd() + '/logs/'
+
+def run_node():
     time_stamp = str(int(time.time()))
     logfile = 'node-output-' + time_stamp + '.txt'
 
-    node = Node('staging', logfile=logfile)
-    node.run_node(10)
+    node = Node('/home/edward/Testing/cardano-node-staging/node', 'staging', logfile=logfile)
+    node.run_node(run_time=10)
 
-    logs = Logs(os.getcwd() + "/logs/" + logfile)
+    logs = Logs(logdir + logfile)
     print(logs.count_logs())
 
-def compare_two_logs():
-    dirFiles = os.listdir(os.getcwd() + "/logs/")
+def compare_most_recent_logs():
+    dirFiles = os.listdir(logdir)
     dirFiles.sort()
-    sorted(dirFiles)
 
-    l1 = Logs(os.getcwd() + "/logs/" + dirFiles[-1])
-    l2 = Logs(os.getcwd() + "/logs/" + dirFiles[-2])
+    logfile1 = Logs(logdir + dirFiles[-1])
+    logfile2 = Logs(logdir + dirFiles[-2])
 
-    c = Comparer(l1, l2)
-    print(c.compare())
-    print(c.find_all_old_logs())
+    print(Comparer.compare_logs(logfile1, logfile2))
+    print(Comparer.diff(logfile1, logfile2))
 
 if __name__ == '__main__':
-    main()
-    main()
-    compare_two_logs()
+    run_node()
+    run_node()
+    compare_most_recent_logs()
