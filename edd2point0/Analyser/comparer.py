@@ -2,7 +2,7 @@ class Comparer():
 
     @staticmethod
     def compare_logs(logfile_1: 'Log', logfile_2: 'Log'):
-        """Find the delta between of events between two Log objects
+        """Find the delta of events between two Log objects
 
         Args:
             logfile_1: A log object to be compared with

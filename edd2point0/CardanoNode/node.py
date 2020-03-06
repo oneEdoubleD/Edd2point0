@@ -4,9 +4,9 @@ import shutil
 import subprocess
 import time
 
-
 class Node():
 
+    _attach_explorer = None
     _logfile = None
     _network = None
     _node_path = None
@@ -32,27 +32,28 @@ class Node():
         except:
             print('state-node-' + network + ' not detected.')
 
-    def _run_node(self, logfile: str):
-        """Run the node
+    def _start_node(self, logfile: str):
+        """Start the node
 
         Args:
             logfile: redirects stdout to the logfile specified during initalization
         """
         self._process = subprocess.Popen([self._node_path], shell=True, stdout=logfile)
 
-    def _stop_node(self):
+    def stop_node(self):
         """Kill the node
 
         """
         self._process.kill()
 
-    def run_node(self, run_time: int = 3600):
+    def run_node(self, run_time: int = 0):
         """Run the node for a specified duration
 
         Args:
             run_time: the number of seconds that the node should run - default is 1 hour
         """
         with open((self._working_dir + '/logs/node/' + self._logfile), "w+") as node_logfile:
-            self._run_node(node_logfile)
-            time.sleep(run_time)
-            self._stop_node()
+            self._start_node(node_logfile)
+            if run_time > 0:
+                time.sleep(run_time)
+                self.stop_node()

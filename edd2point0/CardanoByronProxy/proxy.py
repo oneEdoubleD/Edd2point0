@@ -29,7 +29,7 @@ class Proxy():
         except:
             print('state-node-' + network + ' not detected.')
 
-    def _run_proxy(self, logfile: str):
+    def _start_proxy(self, logfile: str):
         """Run the proxy
 
         Args:
@@ -37,19 +37,20 @@ class Proxy():
         """
         self._process = subprocess.Popen([self._proxy_path], shell=True, stdout=logfile)
 
-    def _stop_proxy(self):
+    def stop_proxy(self):
         """Kill the proxy
 
         """
         self._process.kill()
 
-    def run_proxy(self, run_time: int = 3600):
+    def run_proxy(self, run_time: int = 0):
         """Run the proxy for a specified duration
 
         Args:
             run_time: the number of seconds that the node should run - default is 1 hour
         """
         with open((self._working_dir + '/logs/proxy/' + self._logfile), "w+") as proxy_logfile:
-            self._run_proxy(proxy_logfile)
-            time.sleep(run_time)
-            self._stop_proxy()
+            self._start_proxy(proxy_logfile)
+            if run_time > 0:
+                time.sleep(run_time)
+                self.stop_proxy()
