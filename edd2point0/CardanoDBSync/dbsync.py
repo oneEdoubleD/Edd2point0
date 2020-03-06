@@ -33,15 +33,6 @@ class DBSync():
             logfile: redirects stdout to the logfile specified during initalization
         """
 
-        """
-            scripts/postgresql-setup.sh --createdb
-            PGPASSFILE=config/pgpass db-sync-node/bin/cardano-db-sync \
-                --config config/explorer-mainnet-config.yaml \
-                --genesis-file ../cardano-node/configuration/mainnet-genesis.json \
-                --socket-path ../cardano-node/state-node-mainnet/node.socket \
-                --schema-dir schema/
-        """
-
         # Need to manually add staging :(
         if self._network == 'staging':
             explorer_config_path = '/home/edward/Testing/cardano-db-sync/config/explorer-staging-config.yaml'
@@ -74,16 +65,16 @@ class DBSync():
                                           stdout=logfile)
 
     def stop_dbsync(self):
-        """Kill the node
+        """Kill the dbsync
 
         """
         self._process.kill()
 
     def run_dbsync(self, run_time: int = 0):
-        """Run the node for a specified duration
+        """Run dbsync for a specified duration
 
         Args:
-            run_time: the number of seconds that the node should run - default is 1 hour
+            run_time: the number of seconds that the dbsync should run
         """
         with open((self._working_dir + '/logs/dbsync/' + self._logfile), "w+") as dbsync_logfile:
             self._start_dbsync(dbsync_logfile)

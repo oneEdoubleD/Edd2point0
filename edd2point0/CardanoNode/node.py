@@ -50,7 +50,7 @@ class Node():
         """Run the node for a specified duration
 
         Args:
-            run_time: the number of seconds that the node should run - default is 1 hour
+            run_time: the number of seconds that the node should run
         """
         with open((self._working_dir + '/logs/node/' + self._logfile), "w+") as node_logfile:
             self._start_node(node_logfile)

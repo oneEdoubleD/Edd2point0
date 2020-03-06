@@ -47,7 +47,7 @@ class Proxy():
         """Run the proxy for a specified duration
 
         Args:
-            run_time: the number of seconds that the node should run - default is 1 hour
+            run_time: the number of seconds that the node should run
         """
         with open((self._working_dir + '/logs/proxy/' + self._logfile), "w+") as proxy_logfile:
             self._start_proxy(proxy_logfile)
